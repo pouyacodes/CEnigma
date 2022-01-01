@@ -106,12 +106,12 @@ char encodec(char c) {
 	return islower(c) ? v : toupper(v);
 }
 
-void encodes(const char* plain, size_t lenght, char* cipher) { 
+void encodes(const char* plain, size_t length, char* cipher) { 
 
-	for (size_t i = 0; i < lenght; ++i)
+	for (size_t i = 0; i < length; ++i)
 		cipher[i] = isalpha(plain[i]) ? encodec(plain[i]) : plain[i];
 	
-	cipher[lenght] = '\0';
+	cipher[length] = '\0';
 }
 
 int main(int argc, const char* argv[]) {
@@ -121,9 +121,9 @@ int main(int argc, const char* argv[]) {
 	rotor_init(&rotors[2], ROTOR_LEFT_SEQ);
 
 	const char* plain = (argc > 1 ? argv[1] : "Hello, world!");
-	size_t plain_lenght = strlen(plain);
-	char* cipher = (char*) malloc(plain_lenght + 1);
-	encodes(plain, plain_lenght, cipher);
+	size_t plain_length = strlen(plain);
+	char* cipher = (char*) malloc(plain_length + 1);
+	encodes(plain, plain_length, cipher);
 	puts(cipher);
 
 	return 0;
