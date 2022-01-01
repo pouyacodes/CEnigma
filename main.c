@@ -92,12 +92,12 @@ char reflector(char c) {
 char encodec(char c) {
 	char v = tolower(c);
 	
-	for (int i = 0; i < 3; ++i)
+	for (size_t i = 0; i < 3; ++i)
 		v = rotor_getc(&rotors[i], v);
 
 	v = reflector(v);
 	
-	for (int i = 2; i >= 0; --i)
+	for (size_t i = 2; i >= 0; --i)
 		v = rotor_getcr(&rotors[i], v);
 	
 	rotors_rotation(0);
