@@ -3,9 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 
-#define ROTOR_RIGHT_SEQ 10
+#define ROTOR_RIGHT_SEQ 1
 #define ROTOR_MIDDLE_SEQ 2
-#define ROTOR_LEFT_SEQ 9
+#define ROTOR_LEFT_SEQ 3
 
 struct Rotor;
 
@@ -42,7 +42,7 @@ void rotor_rotate(struct Rotor* rotor, size_t rotate_count) {
 
 		char first = rotor->sequences[0];
 
-		for (size_t j = 0; j < 25; ++j)
+		for (int j = 0; j < 25; ++j)
 			rotor->sequences[j] = rotor->sequences[j + 1];
 		
 		rotor->sequences[25] = first;
@@ -56,19 +56,20 @@ char rotor_getc(struct Rotor* rotor, char c) {
 
 char rotor_getcr(struct Rotor* rotor, char c) {
 
-	for (size_t i = 0; i < 26; ++i) {
-
+	for (int i = 0; i < 26; ++i) {
+		
 		if (rotor->sequences[i] == c)
-			return i + 97;
+			return (char) (i + 97);
 	}
-
+	
+	// We do not return a value here because we are sure the condition will be true at least once.
 }
 
 void rotors_rotation(size_t rotor_no) {
 
 	if (rotor_no >= 3) {
 
-		for (size_t i = 0; i < 3; ++i)
+		for (int i = 0; i < 3; ++i)
 			rotor_rotate(&rotors[i], 0);
 		
 		return;
@@ -92,12 +93,12 @@ char reflector(char c) {
 char encodec(char c) {
 	char v = tolower(c);
 	
-	for (size_t i = 0; i < 3; ++i)
+	for (int i = 0; i < 3; ++i)
 		v = rotor_getc(&rotors[i], v);
 
 	v = reflector(v);
 	
-	for (size_t i = 2; i >= 0; --i)
+	for (int i = 2; i >= 0; --i)
 		v = rotor_getcr(&rotors[i], v);
 	
 	rotors_rotation(0);
