@@ -34,10 +34,10 @@ $ make run
 ## TODO
 
 - [x] Implementing the basic logic (Just some functions that encode/decode)
-- [ ] Implementing the Plugboard feature
+- [x] Implementing the Plugboard feature
 - [ ] Implementing some Object Oriented API
 - [ ] Support for Unicode (Other languages)
 - [ ] Support for command line argument
-- [x] Better codebase structure
+- [ ] Better codebase structure
 
 </div>
