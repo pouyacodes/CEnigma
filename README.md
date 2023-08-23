@@ -1,4 +1,4 @@
-# CEngima (Engima machine in C)
+# CEnigma (Enigma machine in C)
 
 ## Description
 
