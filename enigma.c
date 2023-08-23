@@ -75,6 +75,27 @@ int rotor_get_pos(const char sequence[static ALPHANUM_LENGTH], char needle)
     return -1;
 }
 
+typedef struct {
+    char x;
+    char y;
+} PlugPair;
+
+static const PlugPair plugboard[] = {
+    { .x = 'h', .y = 'w' }
+};
+
+char enigma_plugboard(char c)
+{
+    for (size_t i = 0; i < ARRAY_LEN(plugboard); ++i) {
+        if (plugboard[i].x == c)
+            return plugboard[i].y;
+        else if (plugboard[i].y == c)
+            return plugboard[i].x;
+    }
+
+    return c;
+}
+
 void enigma_rotor_rotate(void)
 {
     bool next_update = false;
@@ -105,6 +126,8 @@ char enigma_encodec(char c)
 
     char ret = tolower(c);
 
+    ret = enigma_plugboard(ret);
+
     for (size_t i = 0; i < ARRAY_LEN(rotors); ++i) {
         if (ret - 'a' < 0)
             ret = rotors[i].sequence[ALPHA_LENGTH + (ret - '0')];
@@ -122,6 +145,8 @@ char enigma_encodec(char c)
     }
 
     enigma_rotor_rotate();
+
+    ret = enigma_plugboard(ret);
 
     return isupper(c) ? toupper(ret) : ret;
 }
@@ -145,6 +170,7 @@ const char *enigma_encodes(const char *str)
 int main(void)
 {
     const char *cipher_text = enigma_encodes(PLAIN_TEXT);
+
     if (cipher_text == NULL) {
         fputs("ERROR: Can't allocate enough memory!\n", stderr);
         return EXIT_FAILURE;
