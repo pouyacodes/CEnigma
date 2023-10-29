@@ -37,7 +37,7 @@ $ make run
 - [x] Implementing the Plugboard feature
 - [ ] Implementing some Object Oriented API
 - [ ] Support for Unicode (Other languages)
-- [ ] Support for command line argument
+- [x] Support for command line argument
 - [ ] Better codebase structure
 
 </div>
