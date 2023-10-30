@@ -1,5 +1,8 @@
 # CEnigma (Enigma machine in C)
 
+> [!WARNING]
+> This project is under development and is not finished yet!
+
 ## Description
 
 Simulation of the [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) in C Prorgramming Language.
