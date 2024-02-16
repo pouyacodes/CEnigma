@@ -1,2 +1,4 @@
 *.swp
 *.o
+lib*.so*
+lib*.a
