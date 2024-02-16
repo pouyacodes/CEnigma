@@ -1,19 +1,27 @@
-SOURCE_FILE := enigma.c
-OBJECT_FILE := $(SOURCE_FILE:%.c=%.o)
-TARGET := enigma
+INCLUDE_PATH  := $(realpath ./include)
+SRC_PATH      := $(realpath ./src)
+EXAMPLES_PATH := $(realpath ./examples)
+TESTS_PATH    := $(realpath ./tests)
 
-CFLAGS := -Wall -Wextra
+CC := gcc
+CFLAGS := -g -Wall -Werror -Wextra -I$(INCLUDE_PATH)
 
-$(TARGET): $(OBJECT_FILE)
-	@$(CC) $^ -o $@ $(CFLAGS)
+VERSION := 1.0
+
+.PHONY: all build install clean
+
+all: build
+
+include $(SRC_PATH)/Makefile
+include $(EXAMPLES_PATH)/Makefile
+include $(TESTS_PATH)/Makefile
+
+build: build-lib build-tests build-examples
+
+install:
+	@echo 'TODO: Not Implemented Yet!'
+
+clean: clean-lib clean-tests clean-examples
 
 %.o: %.c
-	@$(CC) -c $^ $(CFLAGS)
-
-.PHONY: run clean
-
-run: $(TARGET)
-	@./$(TARGET)
-
-clean:
-	rm -rf $(OBJECT_FILE) $(TARGET)
+	@$(CC) -c -o $@ $^ $(CFLAGS)
