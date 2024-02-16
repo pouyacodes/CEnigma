@@ -38,9 +38,12 @@ $ make run
 
 - [x] Implementing the basic logic (Just some functions that encode/decode)
 - [x] Implementing the Plugboard feature
-- [ ] Implementing some Object Oriented API
-- [ ] Support for Unicode (Other languages)
+- [x] Implementing some Object Oriented API
+- [x] Support for Unicode (Other languages)
 - [x] Support for command line argument
-- [ ] Better codebase structure
+- [x] Better codebase structure
+- [ ] Write some tests
+- [ ] Write REPL example
+- [ ] Write docs
 
 </div>
