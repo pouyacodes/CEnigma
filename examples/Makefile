@@ -1,4 +1,4 @@
-EXAMPLES := hello-world
+EXAMPLES := hello-world hello-world-farsi repl
 EXAMPLE_CFLAGS := $(CFLAGS) -L$(SRC_PATH) -l$(LIB_NAME)
 
 MAKESILENT :=
