@@ -43,7 +43,8 @@ $ make run
 - [x] Support for command line argument
 - [x] Better codebase structure
 - [ ] Write some tests
-- [ ] Write REPL example
+- [x] Write REPL example
+- [ ] Standard Makefile targets (install, uninstall, etc)
 - [ ] Write docs
 
 </div>
