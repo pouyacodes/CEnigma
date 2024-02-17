@@ -51,10 +51,11 @@ static struct option options[] = {
     {0},
 };
 
+static const char *program_name;
 
 #define LINE_BUFFER_SIZE 1024
 
-void usage(const char *program_name, bool exit_status)
+void usage(bool exit_status)
 {
     FILE *out_file = exit_status == EXIT_SUCCESS ? stdout : stderr;
     fprintf(out_file,
@@ -68,10 +69,13 @@ void usage(const char *program_name, bool exit_status)
     program_name);
 }
 
-void init_rotors(void)
+bool init_rotors(void)
 {
     FILE *fp = fopen(ROTOR_DATA_PATH, "rb");
-    if (fp == NULL) return;
+    if (fp == NULL) {
+        fprintf(stderr, "%s: ERROR: fopen: %s\n", program_name, strerror(errno));
+        return false;
+    }
 
     static RotorList *lists[3] = { &alphabet_rotors, &digit_rotors, &punctuation_rotors };
 
@@ -81,6 +85,8 @@ void init_rotors(void)
             fread(&len, sizeof(size_t), 1, fp);
 
             wchar_t *values = calloc(len, sizeof(wchar_t));
+            if (values == NULL) return false;
+
             fread(values, sizeof(wchar_t), len, fp);
 
             size_t rotations = 0;
@@ -98,9 +104,32 @@ void init_rotors(void)
     }
 
     fclose(fp);
+    return true;
 }
 
-int repl(const char *program_name, FILE *input, FILE *output)
+void free_rotors(void)
+{
+    da_foreach(&alphabet_rotors) {
+        Rotor *it = &alphabet_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_foreach(&digit_rotors) {
+        Rotor *it = &digit_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_foreach(&punctuation_rotors) {
+        Rotor *it = &punctuation_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_free(&alphabet_rotors);
+    da_free(&digit_rotors);
+    da_free(&punctuation_rotors);
+}
+
+int repl(FILE *input, FILE *output)
 {
     int input_fd = fileno(input);
     if (input_fd < 0) {
@@ -134,7 +163,6 @@ int repl(const char *program_name, FILE *input, FILE *output)
         free((void *)cipher_text);
     }
 
-
     free((void *)plain_text);
 
     return EXIT_SUCCESS;
@@ -143,6 +171,7 @@ int repl(const char *program_name, FILE *input, FILE *output)
 int main(int argc, char **argv)
 {
     (void)argc;
+    program_name = argv[0];
 
     init_rotors();
     setlocale(LC_ALL, "");
@@ -160,10 +189,10 @@ int main(int argc, char **argv)
                 else if (argv[optind] && argv[optind][0] != '-') out_filepath = argv[optind];
                 break;
             case 'h':
-                usage(argv[0], EXIT_SUCCESS);
+                usage(EXIT_SUCCESS);
                 return EXIT_SUCCESS;
             case '?':
-                usage(argv[0], EXIT_FAILURE);
+                usage(EXIT_FAILURE);
                 return EXIT_FAILURE;
         }
     }
@@ -182,5 +211,9 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    return repl(argv[0], input, output);
+    int exit_code = repl(input, output);
+
+    free_rotors();
+
+    return exit_code;
 }

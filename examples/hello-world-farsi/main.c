@@ -18,10 +18,15 @@ static RotorList alphabet_rotors;
 static RotorList digit_rotors;
 static RotorList punctuation_rotors;
 
-void init_rotors(void)
+static const char *program_name;
+
+bool init_rotors(void)
 {
     FILE *fp = fopen(ROTOR_DATA_PATH, "rb");
-    if (fp == NULL) return;
+    if (fp == NULL) {
+        fprintf(stderr, "%s: ERROR: fopen: %s\n", program_name, strerror(errno));
+        return false;
+    }
 
     static RotorList *lists[3] = { &alphabet_rotors, &digit_rotors, &punctuation_rotors };
 
@@ -31,6 +36,8 @@ void init_rotors(void)
             fread(&len, sizeof(size_t), 1, fp);
 
             wchar_t *values = calloc(len, sizeof(wchar_t));
+            if (values == NULL) return false;
+
             fread(values, sizeof(wchar_t), len, fp);
 
             size_t rotations = 0;
@@ -48,13 +55,37 @@ void init_rotors(void)
     }
 
     fclose(fp);
+    return true;
+}
+
+void free_rotors(void)
+{
+    da_foreach(&alphabet_rotors) {
+        Rotor *it = &alphabet_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_foreach(&digit_rotors) {
+        Rotor *it = &digit_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_foreach(&punctuation_rotors) {
+        Rotor *it = &punctuation_rotors.items[i];
+        enigma_rotor_free(it);
+    }
+
+    da_free(&alphabet_rotors);
+    da_free(&digit_rotors);
+    da_free(&punctuation_rotors);
 }
 
 int main(int argc, char **argv)
 {
     (void)argc;
+    program_name = argv[0];
 
-    init_rotors();
+    if (!init_rotors()) return EXIT_FAILURE;
     const wchar_t *plain_text = L"سلام، دنیا!";
 
     Enigma engine = {
@@ -74,6 +105,8 @@ int main(int argc, char **argv)
 
     printf("%ls\n", cipher_text);
     free((void *)cipher_text);
+
+    free_rotors();
 
     return EXIT_SUCCESS;
 }
