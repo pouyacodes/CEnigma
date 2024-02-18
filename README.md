@@ -3,6 +3,8 @@
 > [!WARNING]
 > This project is under development and is not finished yet!
 
+**Note:** Please do <em>not follow</em> this document at this time as it is currently under construction and may contain inaccuracies or wrong information.
+
 ## Description
 
 Simulation of the [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) in C Prorgramming Language.
@@ -46,5 +48,6 @@ $ make run
 - [x] Write REPL example
 - [ ] Standard Makefile targets (install, uninstall, etc)
 - [ ] Write docs
+- [ ] Write a better README.md
 
 </div>
