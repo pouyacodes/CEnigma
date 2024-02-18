@@ -45,9 +45,9 @@ static Enigma engine = {
 };
 
 static struct option options[] = {
-    {"from",   optional_argument, NULL, 'f'},
-    {"to", optional_argument, NULL,     't'},
-    {"help",   no_argument,       NULL, 'h'},
+    {"from", optional_argument, NULL, 'f'},
+    {"to",   optional_argument, NULL, 't'},
+    {"help", no_argument,       NULL, 'h'},
     {0},
 };
 
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
     (void)argc;
     program_name = argv[0];
 
-    init_rotors();
+    if (!init_rotors()) return EXIT_FAILURE;
     setlocale(LC_ALL, "");
 
     const char *in_filepath = NULL, *out_filepath = NULL;
