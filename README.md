@@ -151,7 +151,7 @@ Documentation for each structure and function is provided in the doc blocks with
 - [x] ~Standard Makefile targets (install, uninstall, etc)~
 - [x] ~Write docs~
 - [x] ~Enhance README.md~
-- [ ] Release
+- [x] ~Release~
 
 
 [wiki-enigma-machine]: https://en.wikipedia.org/wiki/Enigma_machine
