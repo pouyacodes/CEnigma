@@ -11,7 +11,7 @@
  * \brief   Represents a Enigma machine.
  *
  * \details The instance of this structure contains all the information
- *          required for encoding texts. Language that Enigma uses, Plugboard
+ *          required for encoding texts, language that Enigma uses, Plugboard,
  *          Rotors.
  *
  *

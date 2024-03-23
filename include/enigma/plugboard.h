@@ -22,6 +22,10 @@ typedef struct PlugPair {
  * \brief   Represent Plugboard
  *
  * \details List of Plugboard pairs.
+ *
+ * \member  items Pointer to `PlugPair` instances
+ * \member  len   length of List
+ * \memebr  cap   capacity of List
  */
 typedef struct PlugboardList {
     DYNAMIC_ARRAY(PlugPair)

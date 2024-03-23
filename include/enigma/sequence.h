@@ -6,8 +6,8 @@
 /**
  * \brief   Represents a Sequence
  *
- * \details instances of this structure represent a rotor that has
- *          a sequence and the number of times that sequence is rotated.
+ * \details instances of this structure represent a simple sequence of data (`wchar_t`)
+ *          and the length of that data.
  *
  * \memebr  values  Pointer to sequence
  * \member  len     The length of the sequence

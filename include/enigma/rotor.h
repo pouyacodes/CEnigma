@@ -10,10 +10,10 @@
 /**
  * \brief   Represents a Rotor
  *
- * \details instances of this structure represent a rotor that has
- *          a sequence and the number of times that sequence is rotated.
+ * \details instances of this structure represent a rotor with
+ *          a sequence and the number of rotations.
  *
- * \memebr  sequence Sequence that the rotor works on
+ * \memebr  sequence  Sequence that the rotor works on
  * \member  rotations The number of time that sequence is rotated
  */
 typedef struct Rotor {
@@ -25,6 +25,10 @@ typedef struct Rotor {
  * \brief   List of Rotors
  *
  * \details Represents List of Rotors.
+ *
+ * \member  items Pointer to `Rotor` instances
+ * \member  len   length of List
+ * \memebr  cap   capacity of List
  */
 typedef struct RotorList {
     DYNAMIC_ARRAY(Rotor)
