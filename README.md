@@ -44,10 +44,11 @@ $ make run
 - [x] Support for Unicode (Other languages)
 - [x] Support for command line argument
 - [x] Better codebase structure
-- [ ] Write some tests
+- [x] Write some tests
 - [x] Write REPL example
-- [ ] Standard Makefile targets (install, uninstall, etc)
-- [ ] Write docs
+- [x] Standard Makefile targets (install, uninstall, etc)
+- [x] Write docs
 - [ ] Write a better README.md
+- [ ] Release
 
 </div>
