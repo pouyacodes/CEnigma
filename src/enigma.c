@@ -6,7 +6,7 @@
 
 #include <enigma/enigma.h>
 
-wchar_t enigma_machine(Sequence *sequence, RotorList *rotors, wchar_t c)
+static wchar_t enigma_machine(Sequence *sequence, RotorList *rotors, wchar_t c)
 {
     da_foreach(rotors) {
         Rotor *rotor = &rotors->items[i];
@@ -25,7 +25,7 @@ wchar_t enigma_machine(Sequence *sequence, RotorList *rotors, wchar_t c)
     return c;
 }
 
-wchar_t enigma_encode_alphabet(const Enigma *e, wchar_t c)
+static wchar_t enigma_encode_alphabet(const Enigma *e, wchar_t c)
 {
     if (e->plugboard) c = enigma_plugboard(e->plugboard, c);
     c = enigma_machine(e->language->alphabet, e->alphabet_rotors, c);
@@ -34,12 +34,12 @@ wchar_t enigma_encode_alphabet(const Enigma *e, wchar_t c)
     return c;
 }
 
-wchar_t enigma_encode_digit(const Enigma *e, wchar_t c)
+static wchar_t enigma_encode_digit(const Enigma *e, wchar_t c)
 {
     return enigma_machine(e->language->digit, e->digit_rotors, c);
 }
 
-wchar_t enigma_encode_punctuation(const Enigma *e, wchar_t c)
+static wchar_t enigma_encode_punctuation(const Enigma *e, wchar_t c)
 {
     return enigma_machine(e->language->punctuation, e->punctuation_rotors, c);
 }
